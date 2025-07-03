@@ -12,6 +12,8 @@ const Layout: React.FC = () => {
 
   const isMessagesRoute = location.pathname.startsWith("/messages");
 
+  const isMessagesChildRoute = location.pathname.startsWith("/messages/");
+
   return (
     <div className="flex h-screen bg-background">
       {/* Desktop Navigation Sidebar */}
@@ -20,7 +22,7 @@ const Layout: React.FC = () => {
       {/* Main Content */}
       <div className="flex-1 flex flex-col">
         {/* Mobile Header */}
-        {isMobile && <MobileHeader />}
+        {isMobile && !isMessagesChildRoute && <MobileHeader />}
 
         <main className="flex-1 overflow-hidden">
           <Outlet />

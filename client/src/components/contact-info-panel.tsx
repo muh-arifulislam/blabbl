@@ -4,15 +4,21 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
-import { conversations } from "@/data";
-
-const selectedChat = conversations[0];
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { closeShowRightPanel } from "@/redux/features/app/appSlice";
 
 export function ContactInfoPanel() {
-  if (!selectedChat) return null;
+  const dispatch = useAppDispatch();
+  const { showRightPanel } = useAppSelector((state) => state.app);
 
+  const { selectedConversation } = useAppSelector((state) => state.app);
+
+  if (!selectedConversation) return null;
   return (
-    <Sheet open={true}>
+    <Sheet
+      open={showRightPanel}
+      onOpenChange={() => dispatch(closeShowRightPanel())}
+    >
       <SheetContent side="right" className="w-80 p-0">
         <div className="flex h-full flex-col">
           <div className="flex items-center justify-between p-4 border-b">
@@ -21,17 +27,21 @@ export function ContactInfoPanel() {
 
           <div className="p-6 text-center border-b">
             <Avatar className="h-20 w-20 mx-auto mb-4">
-              <AvatarImage src={selectedChat.avatar || "/placeholder.svg"} />
+              <AvatarImage
+                src={selectedConversation?.avatar || "/placeholder.svg"}
+              />
               <AvatarFallback className="text-lg">
-                {selectedChat.name
+                {selectedConversation?.name
                   .split(" ")
                   .map((n: string) => n[0])
                   .join("")}
               </AvatarFallback>
             </Avatar>
-            <h4 className="font-semibold text-lg">{selectedChat.name}</h4>
+            <h4 className="font-semibold text-lg">
+              {selectedConversation?.name}
+            </h4>
             <p className="text-sm text-muted-foreground">
-              {selectedChat.online ? "Online" : "Last seen 2h ago"}
+              {selectedConversation?.online ? "Online" : "Last seen 2h ago"}
             </p>
           </div>
 

@@ -1,26 +1,15 @@
 "use client";
 
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Plus, UserPlus, Edit } from "lucide-react";
+import { Plus, UserPlus, Edit } from "lucide-react";
 import { navItems } from "@/constant";
 
 export function MobileHeader() {
   const location = useLocation();
-  const navigate = useNavigate();
 
   const getCurrentPageInfo = () => {
     const path = location.pathname;
-
-    if (path.startsWith("/messages/")) {
-      // Individual chat page
-      return {
-        title: "Chat", // This would be dynamic based on chat data
-        showBack: true,
-        onBack: () => navigate("/messages"),
-        actions: null,
-      };
-    }
 
     const currentNav = navItems.find((item) => path.startsWith(item.path));
     if (!currentNav) return { title: "", showBack: false, actions: null };
@@ -60,16 +49,11 @@ export function MobileHeader() {
     };
   };
 
-  const { title, showBack, onBack, actions } = getCurrentPageInfo();
+  const { title, actions } = getCurrentPageInfo();
 
   return (
     <div className="md:hidden flex items-center justify-between p-4 border-b bg-card">
       <div className="flex items-center gap-3">
-        {showBack && (
-          <Button variant="ghost" size="icon" onClick={onBack}>
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-        )}
         <h1 className="text-lg font-semibold truncate">{title}</h1>
       </div>
       <div className="flex items-center gap-2">{actions}</div>

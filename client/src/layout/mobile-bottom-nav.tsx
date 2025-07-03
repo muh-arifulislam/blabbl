@@ -30,7 +30,6 @@ export function MobileBottomNav() {
             className="flex flex-col gap-1 h-auto py-2 px-3"
           >
             <item.icon className="h-4 w-4" />
-            <span className="text-xs">{item.label}</span>
           </Button>
         ))}
       </div>
