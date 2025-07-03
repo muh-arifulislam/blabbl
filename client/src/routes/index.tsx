@@ -1,6 +1,7 @@
 import App from "@/App";
 import LoginPage from "@/scenes/auth/login";
 import FriendsPage from "@/scenes/friends/page";
+import ChatPage from "@/scenes/messages/[chatId]/page";
 import MessagesPage from "@/scenes/messages/page";
 import ProfilesPage from "@/scenes/profile/page";
 import SettingsPage from "@/scenes/settings/page";
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
       {
         path: "/messages",
         element: <MessagesPage />,
+      },
+      {
+        path: "/messages/:chatId",
+        element: <ChatPage />,
       },
       {
         path: "/status",
